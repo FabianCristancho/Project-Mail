@@ -1,0 +1,24 @@
+{
+  "name": "serverMail",
+  "version": "1.0.0",
+  "description": "",
+  "main": "serverMail.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node serverMail.js",
+    "dev": "nodemon serverMail.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "axios": "^0.20.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "nodemailer": "^6.4.11",
+    "pdfkit": "^0.11.0",
+    "voilab-pdf-table": "^0.5.0"
+  }
+}
