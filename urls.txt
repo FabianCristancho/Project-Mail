@@ -17,3 +17,17 @@ https://www.youtube.com/watch?v=RSzMidcXeeA
 https://www.andronio.me/2017/09/02/pdfkit-tables/
 
 https://www.npmjs.com/package/voilab-pdf-table
+
+https://medium.com/@mackplevine/node-js-get-pixels-getting-pixels-at-specific-sectors-of-an-image-using-ndarray-e6d4cb285d36
+
+https://www.bennadel.com/blog/3780-getting-the-rgb-color-value-of-an-image-pixel-using-graphicsmagick-and-lucee-cfml-5-2-9-31.htm
+
+https://ourcodeworld.com/articles/read/185/how-to-get-the-pixel-color-from-a-canvas-on-click-or-mouse-event-with-javascript
+
+https://stackoverflow.com/questions/12286039/get-an-array-of-pixels-from-an-image-file-using-node-js
+
+https://github.com/foliojs/png.js
+
+https://www.npmjs.com/package/jimp
+
+https://www.npmjs.com/package/get-image-colors
