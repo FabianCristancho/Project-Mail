@@ -31,7 +31,7 @@ function sendMail(pdfData, data) {
 	var mailOptions = {
 		from: 'distributed.systemUPTC@gmail.com',
 		to: data.email,
-		subject: 'CORREO DESDE NODEJS - PDF',
+		subject: 'CORREO PRUEBA DESDE NODEJS - PDF',
 		text: 'Este email es de prueba, y contiene un PDF como archivo adjunto.',
 		attachments: [
 			{

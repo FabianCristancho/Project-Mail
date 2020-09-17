@@ -31,3 +31,12 @@ https://github.com/foliojs/png.js
 https://www.npmjs.com/package/jimp
 
 https://www.npmjs.com/package/get-image-colors
+
+============================================================================================
+                                        IMAGES
+============================================================================================
+https://i.stack.imgur.com/jZhAM.png
+
+https://icons.iconarchive.com/icons/graphicloads/android-settings/16/plus-icon.png
+
+https://i5.walmartimages.com/asr/fa878da6-b702-4fae-a62f-6711ba14ceaf_1.da49583dfcde9e12caf49140803195cd.png
