@@ -1,14 +1,15 @@
 var app = new Vue({
     el: '#app',
     data: {
-      name: '',
-      lastName: '',
+      red: '',
+      green: '',
+      blue: '',
       email: ''
     },
     methods: {
         sendData: function(){
-            console.log("Name: " +this.name +", Last Name: " +this.lastName);
-            axios.get('http://localhost:3000/dataUser', {params: {name: this.name, lastName: this.lastName, email: this.email}})
+            console.log("Name: " +this.red +", Last Name: " +this.blue);
+            axios.get('http://localhost:3000/dataUser', {params: {red: this.red, green: this.green, blue: this.blue, email: this.email}})
             .then(res => {
                 console.log(res);
             })
