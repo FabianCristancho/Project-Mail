@@ -1,10 +1,47 @@
 const PDF = require('pdfkit');
 const fs = require('fs');
 const pathI = require('path');
+const nodemailer = require('nodemailer');
 
 var doc = new PDF();
 
 doc.pipe(fs.createWriteStream(__dirname + '/ejemplo.pdf'));
+
+var transporter = nodemailer.createTransport({
+     service: "gmail",
+     auth: {
+       user: "distributed.systemUPTC",
+       pass: "distributed_system2020",
+     },
+});
+
+function sendMail(pdfData) {
+     var mailOptions = {
+       from: "distributed.systemUPTC@gmail.com",
+       to: "fabiancris99@gmail.com",
+       subject: "REPORTE DE COLORES",
+       text: "Otra versión que se encarga de enviar el reporte de los colores de dos figuras",
+       attachments: [
+         {
+           filename: "file.pdf",
+           contentType: "application/pdf",
+           path: "ejemplo.pdf"
+          //  content: pdfData
+         },
+         {
+              filename: "my_image.png",
+              content: fs.createReadStream('test.png')
+         }
+       ],
+     };
+     transporter.sendMail(mailOptions, function (err, info) {
+       if (err) {
+         console.log(err);
+       } else {
+         console.log("Email sended: " + info.response);
+       }
+     });
+}
 
 function drawTable(doc, myArray, initPoint){
      let y = initPoint;
@@ -36,12 +73,19 @@ function drawBlockTable(title, colors, y, path){
 }
 
 async function multipleTables(data){
+     let buffers = [];
+     doc.on("data", buffers.push.bind(buffers));
+     doc.on("end", () => {
+          let pdfData = Buffer.concat(buffers);
+          sendMail(pdfData);
+     });
      for(let i = 0; i < data.length; i++){
           await drawBlockTable(data[i].title, data[i].arrayColors, data[i].position, data[i].path);
           if(i < data.length-1){
                doc.addPage();
           }
      }
+     
      console.log('Reporte creado con éxito');
      doc.end();
 }
