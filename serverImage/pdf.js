@@ -11,7 +11,7 @@ var transporter = nodemailer.createTransport({
      service: "gmail",
      auth: {
        user: "distributed.systemUPTC",
-       pass: "distributed_system2020",
+       pass: "distributed01_system2020",
      },
 });
 
@@ -19,20 +19,9 @@ function sendMail(pdfData) {
      var mailOptions = {
        from: "distributed.systemUPTC@gmail.com",
        to: "fabiancris99@gmail.com",
-       subject: "REPORTE DE COLORES",
-       text: "Otra versión que se encarga de enviar el reporte de los colores de dos figuras",
-       attachments: [
-         {
-           filename: "file.pdf",
-           contentType: "application/pdf",
-           path: "ejemplo.pdf"
-          //  content: pdfData
-         },
-         {
-              filename: "my_image.png",
-              content: fs.createReadStream('test.png')
-         }
-       ],
+       subject: "REPORTE DE COLORES EN IMAGENES",
+       text: "Versión que se encarga de enviar el reporte de los colores de imagenes",
+       attachments: getFilesAttachment()
      };
      transporter.sendMail(mailOptions, function (err, info) {
        if (err) {
@@ -85,7 +74,6 @@ async function multipleTables(data){
                doc.addPage();
           }
      }
-     
      console.log('Reporte creado con éxito');
      doc.end();
 }
@@ -127,6 +115,15 @@ function textInRowFirst(doc, text, width, heigth) {
 		columns: 1
 	});
 	return doc;
+}
+
+function getFilesAttachment(){
+     let attachments = [];
+     attachments.push({filename: "file.pdf", contentType: "application/pdf", path: "ejemplo.pdf"});
+     for(let i = 1; i <= 5; i++){
+          attachments.push({filename: "figura_" +i +".png", content: fs.createReadStream('./res/IMAGEN-' +i +'.png')})
+     }
+     return attachments;
 }
 
 function row(doc, heigth) {

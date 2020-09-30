@@ -1,8 +1,9 @@
 var Jimp = require('jimp');
 const pdf = require('./pdf');
-var reportImages = [{path: 'test.png', title: 'FIGURA 1', position: 130},
-				{path: 'https://icons.iconarchive.com/icons/graphicloads/android-settings/16/plus-icon.png', title: 'FIGURA 2', position: 130}
-				];
+const extractImage = require('./extractImage');
+const numFrames = 5;
+
+var reportImages = [];
 
 function getColorPixels(inputImage) {
 	return new Promise((resolve, reject) => {
@@ -36,15 +37,35 @@ function recorreMap(image, title, point) {
 				console.log(key + ' : ' + value);
 			}
 			resolve(pixelsColors);
-			// pdf.drawBlockTable(title, pixelsColors, point);
 		}).catch(err =>{
 			console.log(err);
 		})
 	})
 }
 
+function changeSize(){
+		console.log('Entra al for');
+		for(let i = 1; i <= numFrames; i++){
+			let pathImage = './res/IMAGEN-'+i+'.png';
+			reportImages.push({path: pathImage, title: 'IMAGEN ' +i, position: 130})
+			// images.push(pathImage);
+			console.log('EMPIEZA');
+			Jimp.read(pathImage)
+			.then(myImage => {
+				return myImage
+				.resize(100, 75)
+				.quality(60)
+				.write(pathImage);
+			})
+			.catch(err => {
+				console.error(err);
+			});
+		}
+}
+
+
+
 async function addImages(){
-	// return new Promise((resolve, reject) => {
 		console.log('Start');
 		let report = [];
 
@@ -64,45 +85,14 @@ async function addImages(){
 		console.log('hola: ' +report[1].title);
 		pdf.multipleTables(report);
 		return report;
-		// resolve(report);
-	// })
+		
 }
 
-addImages();
-
-// addImages().then((res)=>{
-// 	let aux = res;
-// 	console.log("Essssss:" +aux.length);
-// }).catch(err => {
-// 	console.log(err);
-// })
-// addImage('test.png', 'Figura 1', 130);
-// console.log(reportImages.length);
-
-
-// console.log(recorreMap('test.png', 'FIGURA 1', 130));
-// recorreMap('test.png', 'FIGURA 1', 130);
-
-
-// function getMyImages(){
-// 	return new Promise((resolve, reject) => {
-// 		recorreMap('test.png', 'FIGURA 1', 130);
-// 		console.log('termina');
-// 		resolve('Success');
-// 	})
-// }
-
-// function result(){
-// 	getMyImages().then((res) => {
-// 		console.log(res);
-// 		pdf.closePDF();
-// 	})
-// 	.catch(err =>{
-// 		console.log(err);
-// 	})
-// }
-
-// result();
-
-
-// recorreMap('https://icons.iconarchive.com/icons/graphicloads/android-settings/16/plus-icon.png');
+extractImage.extractImages('./res/test.mp4').then((res) =>{
+	console.log(res);
+	changeSize();
+	setTimeout(function(){ addImages(); }, 3000);
+})
+.catch(err => {
+     console.log(err);
+});

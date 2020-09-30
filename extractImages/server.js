@@ -9,20 +9,20 @@ var images = [];
 
 ffmpeg.setFfmpegPath(ffmpegPath);
 
-async function getDuration(){
+async function getDuration(pathVideo){
      let durationVideo = 0;
-     await getVideoDurationInSeconds('test.mp4').then((duration) => {
-          console.log(duration);
+     await getVideoDurationInSeconds(pathVideo).then((duration) => {
+          console.log('Video duration: ' +duration);
           durationVideo = duration*1000;
      })
      return durationVideo;
 }
 
-function extractImages(){
+function extractImages(pathVideo){
      return new Promise((resolve, reject) => {
-          getDuration().then(async (res) => {
+          getDuration(pathVideo).then(async (res) => {
                await extractFrames({
-                    input: 'test.mp4',
+                    input: pathVideo,
                     output: __dirname +'/res/IMAGEN-%i.png',
                     offsets: getRandomDuration(numFrames, res)
                })
@@ -35,27 +35,18 @@ function extractImages(){
 function getRandomDuration(numframes, duration){
      let numRandoms = [];
      for(let i=0; i<numframes; i++){
-          //Num random entre 1 y duration
           let numRandom = Math.round(Math.random()*(duration-1)+1);
+          console.log('Random frame at millisecond ' +numRandom);
           numRandoms.push(numRandom);
      }
      return numRandoms;
 }
 
-// console.log(getRandomDuration(5, 6000));
-
-
-//ESTAN FUNCIONANDO
-
-// console.log('Duration is: ' +getDuration().then((res)=>{
-//      console.log('otro: ' +res);
-// }));
-
-
-extractImages().then((res) =>{
+extractImages('./res/test.mp4').then((res) =>{
      console.log(res);
      for(let i = 1; i <= numFrames; i++){
-          let pathImage = __dirname+'/res/IMAGEN-'+i+'.png';
+          let pathImage = './res/IMAGEN-'+i+'.png';
+          images.push(pathImage);
           Jimp.read(pathImage, (err, myImage) => {
                if(err) throw err;
                myImage
@@ -64,8 +55,10 @@ extractImages().then((res) =>{
                .write(pathImage);
           });
      }
+}).then((res)=>{
+     for(let i = 0; i<images.length; i++){
+          console.log(images[i]);
+     }
 }).catch(err => {
      console.log(err);
 });
-
-
